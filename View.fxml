@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project3.Controller">
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Student Profiles">
+            <content>
+              <AnchorPane maxHeight="600.0" maxWidth="700.0" minHeight="573.0" minWidth="700.0" prefHeight="573.0" prefWidth="700.0">
+                     <children>
+                        <GridPane layoutX="48.0" layoutY="40.0" maxHeight="600.0" maxWidth="-Infinity" prefHeight="264.0" prefWidth="602.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="117.19998779296876" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.8000244140625" minWidth="10.0" prefWidth="485.6000122070312" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="43.79999389648438" minHeight="10.0" prefHeight="43.79999389648438" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="27.799993896484352" minHeight="10.0" prefHeight="23.000006103515602" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="nameBox1" GridPane.columnIndex="1" />
+                              <Label text="Name" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin></Label>
+                              <Label text="Major" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin></Label>
+                              <Label text="Status" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin></Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <RadioButton fx:id="csButton1" mnemonicParsing="false" text="CS" />
+                                    <RadioButton fx:id="itButton1" mnemonicParsing="false" text="IT" />
+                                    <RadioButton fx:id="baButton1" mnemonicParsing="false" text="BA" />
+                                    <RadioButton fx:id="eeButton1" mnemonicParsing="false" text="EE" />
+                                    <RadioButton fx:id="meButton1" mnemonicParsing="false" text="ME" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <RadioButton fx:id="residentButton" mnemonicParsing="false" text="Resident" />
+                                    <RadioButton fx:id="nonResidentButton" mnemonicParsing="false" text="Non-Resident" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <RadioButton fx:id="tristateButton" mnemonicParsing="false" text="Tristate" />
+                                    <RadioButton fx:id="nyButton" mnemonicParsing="false" text="New York" />
+                                    <RadioButton fx:id="ctButton" mnemonicParsing="false" text="Connecticut" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <RadioButton fx:id="internationalButton" mnemonicParsing="false" text="International">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </RadioButton>
+                                    <CheckBox fx:id="studyAbroadCheckBox" mnemonicParsing="false" text="Study Abroad" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </HBox>
+                              <Label text="Credit Hours" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin></Label>
+                              <TextField fx:id="creditHoursBox" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                                 <children>
+                                    <Button fx:id="addStudentButton" mnemonicParsing="false" text="Add Student" />
+                                    <Button fx:id="removeStudentButton" mnemonicParsing="false" text="Remove Student" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <children>
+                                    <Button fx:id="tuitionDueButton" mnemonicParsing="false" text="Tuition Due" />
+                                    <Label text="\$">
+                                       <HBox.margin>
+                                          <Insets top="4.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField promptText="0.00" translateX="-27.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </GridPane>
+                        <TextArea fx:id="studentProfilesBox" layoutX="43.0" layoutY="342.0" prefHeight="200.0" prefWidth="612.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Payments/Financial Aid">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="52.0" layoutY="44.0" prefHeight="213.0" prefWidth="509.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.20001220703125" minWidth="10.0" prefWidth="150.4000244140625" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="366.3999755859375" minWidth="10.0" prefWidth="358.3999755859375" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Student Name" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Major" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Payment Amount" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Payment Date" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Financial Aid Amount" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets right="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="nameBox2" GridPane.columnIndex="1" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <children>
+                                    <RadioButton fx:id="csButton2" mnemonicParsing="false" text="CS" />
+                                    <RadioButton fx:id="itButton2" mnemonicParsing="false" text="IT" />
+                                    <RadioButton fx:id="baButton2" mnemonicParsing="false" text="BA" />
+                                    <RadioButton fx:id="eeButton2" mnemonicParsing="false" text="EE" />
+                                    <RadioButton fx:id="meButton2" mnemonicParsing="false" text="ME" />
+                                 </children>
+                                 <padding>
+                                    <Insets top="13.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <DatePicker fx:id="dateSelect" prefHeight="26.0" prefWidth="228.0">
+                                       <HBox.margin>
+                                          <Insets left="8.0" top="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <Button fx:id="payButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Pay">
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label text="\$">
+                                       <padding>
+                                          <Insets top="13.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="finAidBox" prefWidth="229.0" promptText="0.00">
+                                       <HBox.margin>
+                                          <Insets top="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button fx:id="finAidButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Set">
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label text="\$">
+                                       <padding>
+                                          <Insets top="13.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="paymentBox" prefHeight="26.0" prefWidth="228.0" promptText="0.00">
+                                       <HBox.margin>
+                                          <Insets top="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
+                        <TextArea fx:id="paymentsFinAidBox" layoutX="52.0" layoutY="315.0" prefHeight="200.0" prefWidth="594.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Process Tuition">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <MenuBar fx:id="menuBar" layoutX="60.0" layoutY="47.0">
+                          <menus>
+                            <Menu fx:id="tuitionMenu" mnemonicParsing="false" text="Tuition">
+                              <items>
+                                <MenuItem fx:id="tuitionMenuButton" mnemonicParsing="false" text="Calculate Tuition Dues" />
+                              </items>
+                            </Menu>
+                            <Menu fx:id="printMenu" mnemonicParsing="false" text="Print">
+                              <items>
+                                <MenuItem fx:id="printRosterButton" mnemonicParsing="false" text="Roster" />
+                                    <MenuItem fx:id="printByNameButton" mnemonicParsing="false" text="Roster by Name" />
+                                    <MenuItem fx:id="printByTuitionButton" mnemonicParsing="false" text="Roster by Tuition Paid" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                        <TextArea layoutX="43.0" layoutY="218.0" prefHeight="290.0" prefWidth="614.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
