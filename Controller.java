@@ -1,77 +1,40 @@
-package Project3;
+package com.example.smproject3;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-public class Controller {
+public class HelloController {
+
+    private Roster roster;
+
+    int minCredits = 3;
+    int maxCredits = 24;
+    int zero = 0;
 
     @FXML
-    private Button addStudentButton;
+    private Button addButton;
 
     @FXML
-    private RadioButton baButton1;
+    private TextField creditHrs;
 
     @FXML
-    private RadioButton baButton2;
-
-    @FXML
-    private TextField creditHoursBox;
-
-    @FXML
-    private RadioButton csButton1;
-
-    @FXML
-    private RadioButton csButton2;
-
-    @FXML
-    private RadioButton ctButton;
-
-    @FXML
-    private DatePicker dateSelect;
-
-    @FXML
-    private RadioButton eeButton1;
-
-    @FXML
-    private RadioButton eeButton2;
-
-    @FXML
-    private TextField finAidBox;
-
-    @FXML
-    private Button finAidButton;
+    private ToggleGroup ifResident;
 
     @FXML
     private RadioButton internationalButton;
 
     @FXML
-    private RadioButton itButton1;
+    private ToggleGroup majors;
 
     @FXML
-    private RadioButton itButton2;
+    private RadioButton meButton;
 
     @FXML
-    private RadioButton meButton1;
+    private TextField nameEnter;
 
     @FXML
-    private RadioButton meButton2;
-
-    @FXML
-    private MenuBar menuBar;
-
-    @FXML
-    private TextField nameBox1;
-
-    @FXML
-    private TextField nameBox2;
+    private ToggleGroup nonResType;
 
     @FXML
     private RadioButton nonResidentButton;
@@ -80,48 +43,152 @@ public class Controller {
     private RadioButton nyButton;
 
     @FXML
-    private Button payButton;
+    private RadioButton ctButton;
 
     @FXML
-    private TextField paymentBox;
+    private TextArea output;
 
     @FXML
-    private TextArea paymentsFinAidBox;
-
-    @FXML
-    private MenuItem printByNameButton;
-
-    @FXML
-    private MenuItem printByTuitionButton;
-
-    @FXML
-    private Menu printMenu;
-
-    @FXML
-    private MenuItem printRosterButton;
-
-    @FXML
-    private Button removeStudentButton;
+    private Button removeButton;
 
     @FXML
     private RadioButton residentButton;
 
     @FXML
-    private TextArea studentProfilesBox;
+    private CheckBox studyAbroadButton;
 
     @FXML
-    private CheckBox studyAbroadCheckBox;
+    private RadioButton triStateButton;
 
     @FXML
-    private RadioButton tristateButton;
+    private ToggleGroup triStateType;
+
+    @FXML
+    private TextField tuitionDueAmt;
 
     @FXML
     private Button tuitionDueButton;
 
     @FXML
-    private Menu tuitionMenu;
+    boolean creditChecker() {
+        try {
+            int numCreditHrs = Integer.parseInt(creditHrs.getText());
+        } catch (NumberFormatException e) {
+            output.appendText("Invalid credit hours.\n");
+            return false;
+        }
+        // add if credits checker is empty
+        int numCreditHrs = Integer.parseInt(creditHrs.getText());
+        if (numCreditHrs < zero) {
+            output.appendText("Credit hours cannot be negative.\n");
+            return false;
+        } else if (numCreditHrs < minCredits) {
+            output.appendText("Minimum credit hours is 3.\n");
+            return false;
+        } else if (numCreditHrs > maxCredits) {
+            output.appendText("Credit hours exceed the maximum 24.\n");
+            return false;
+        } else return true;
+    }
 
     @FXML
-    private MenuItem tuitionMenuButton;
+    public boolean dataChecker() {
+        String stuName = nameEnter.getText();
+        if (stuName.isEmpty()) {
+            output.appendText("Name data missing.\n");
+            return false;
+        }
+        RadioButton major = (RadioButton) majors.getSelectedToggle();
+        if (major == null) {
+            output.appendText("Major data missing.\n");
+            return false;
+        }
+        RadioButton status = (RadioButton) ifResident.getSelectedToggle();
+        if (status == null) {
+            output.appendText("Student status data missing.\n");
+            return false;
+        }
+        RadioButton tri = (RadioButton) triStateType.getSelectedToggle();
+        if (nonResidentButton.isSelected() && triStateButton.isSelected()) ;
+        {
+            if (tri == null) {
+                output.appendText("Tri-state data missing.\n");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    @FXML
+    void addButtonClick(ActionEvent event) {
+        if (creditChecker() && dataChecker()) {
+            int numCreditHrs = Integer.parseInt(creditHrs.getText());
+            RadioButton major = (RadioButton) majors.getSelectedToggle();
+            String stuMajor = major.getText();
+            String stuName = nameEnter.getText();
+            RadioButton status = (RadioButton) ifResident.getSelectedToggle();
+            String statusText = status.getText();
+            output.appendText(statusText);
+            /*if (statusText.equals("Resident")) {
+                Resident resident = new Resident(stuName, stuMajor, numCreditHrs);
+                if (!roster.add(resident)) {
+                    output.appendText("Student is already in the roster.\n");
+                } else {
+                    //roster.add(resident); //(try)
+                    output.appendText("Student added.\n");
+                }
+            }*/
+        }
+    }
+
+    @FXML
+    void intButtonClicked(ActionEvent event) {
+        studyAbroadButton.setDisable(false);
+        nyButton.setDisable(true);
+        ctButton.setDisable(true);
+        nyButton.setSelected(false);
+        ctButton.setSelected(false);
+    }
+
+    @FXML
+    void nonResidentButtonClick(ActionEvent event) {
+        triStateButton.setDisable(false);
+        internationalButton.setDisable(false);
+    }
+
+    @FXML
+    void removeButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void residentButtonClick(ActionEvent event) {
+        triStateButton.setDisable(true);
+        internationalButton.setDisable(true);
+        studyAbroadButton.setDisable(true);
+        nyButton.setDisable(true);
+        ctButton.setDisable(true);
+        triStateButton.setSelected(false);
+        internationalButton.setSelected(false);
+        studyAbroadButton.setSelected(false);
+        nyButton.setSelected(false);
+        ctButton.setSelected(false);
+    }
+
+    @FXML
+    void triStateButtonClicked(ActionEvent event) {
+        nyButton.setDisable(false);
+        ctButton.setDisable(false);
+        studyAbroadButton.setDisable(true);
+        internationalButton.setSelected(false);
+        studyAbroadButton.setSelected(false);
+    }
+
+    @FXML
+    void tuitionDueButtonClick(ActionEvent event) {
+
+    }
 
 }
+
