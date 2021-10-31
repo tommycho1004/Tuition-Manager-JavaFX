@@ -1,4 +1,4 @@
-package Project3;
+package com.example.smproject3;
 /**
  * The Roster class used as the container for students.
  * This class contains methods to perform several functions to the roster of students.
@@ -25,7 +25,7 @@ public class Roster {
      * @param student Student who is being found
      * @return int index of student if found, -1 otherwise
      */
-    private int find(Student student) {
+    public int find(Student student) {
         for (var i = 0; i < size; i++) {
             if (roster[i].getProfile().equals(student.getProfile())) {
                 return i;
