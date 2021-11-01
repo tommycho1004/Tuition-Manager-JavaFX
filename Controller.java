@@ -449,6 +449,9 @@ public class HelloController {
      */
     @FXML
     void tuitionDueButtonClick(ActionEvent event) {
+        DecimalFormat dec = new DecimalFormat("#0.00");
+        dec.setGroupingUsed(true);
+        dec.setGroupingSize(3);
         if (creditChecker() && dataChecker()) {
             int numCreditHrs = Integer.parseInt(creditHrs.getText());
             RadioButton major = (RadioButton) majors.getSelectedToggle();
@@ -460,13 +463,13 @@ public class HelloController {
                 Resident resident = new Resident(stuName, stuMajor, numCreditHrs);
                 resident.tuitionDue();
                 String tuition = String.valueOf(resident.getTuitionDue());
-                output.appendText("Tuition Due: " + tuition + "\n");
+                output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
             } else if (status.getText().equals("Non-Resident")) {
                 if (nonResType.getSelectedToggle() == (null)) {
                     NonResident nonResident = new NonResident(stuName, stuMajor, numCreditHrs);
                     nonResident.tuitionDue();
                     String tuition = String.valueOf(nonResident.getTuitionDue());
-                    output.appendText("Tuition Due: " + tuition + "\n");
+                    output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
                 } else {
                     RadioButton nonRes = (RadioButton) nonResType.getSelectedToggle();
                     if (nonRes.getText().equals("TriState")) {
@@ -481,13 +484,13 @@ public class HelloController {
                         TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state1);
                         triState.tuitionDue();
                         String tuition = String.valueOf(triState.getTuitionDue());
-                        output.appendText("Tuition Due: " + tuition + "\n");
+                        output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
                     }
                     if (nonRes.getText().equals("International")) {
                         International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
                         international.tuitionDue();
                         String tuition = String.valueOf(international.getTuitionDue());
-                        output.appendText("Tuition Due: " + tuition + "\n");
+                        output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
                     }
                 }
             }
