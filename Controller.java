@@ -3,9 +3,10 @@ package com.example.smproject3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
+
 
 /**
  * The controller class that holds all instance variables and methods for the GUI
