@@ -239,21 +239,28 @@ public class Roster {
         } else return false; //student is not found
     }
 
+    /**
+     * A method that sets the study abroad status of an international student to false
+     *
+     * @param student Student who is studying abroad
+     * @return true if the setting was successful, false otherwise
+     */
     public boolean setNotStudyAbroad(Student student) {
         if (find(student) != -1) {
-            if (student instanceof International) {
-                ((International) student).setNotStudyAbroad();
-                if (student.getCreditHours() > 12) {
-                    student.setCreditHours(12);
+            if (roster[find(student)] instanceof International) {
+                ((International) roster[find(student)]).setNotStudyAbroad();
+                if (roster[find(student)].getCreditHours() > 12) {
+                    roster[find(student)].setCreditHours(12);
                 }
-                student.setTotalPayment(0);
-                student.setTuitionDue(0);
+                roster[find(student)].setTotalPayment(0);
+                roster[find(student)].setTuitionDue(0);
                 Date temp = new Date("0/0/0");
-                student.setLastPaid(temp);
-                student.tuitionDue();
+                roster[find(student)].setLastPaid(temp);
+                roster[find(student)].setMadePayment(false);
+                roster[find(student)].tuitionDue();
                 return true;
-            } else return false;
-        } else return false;
+            } else return false; //student is not international
+        } else return false; //student is not found
     }
 
     /**
@@ -280,6 +287,11 @@ public class Roster {
         } else return 0;
     }
 
+    /**
+     * A method that finds a specific student in the roster and returns that student.
+     * @param student student being found.
+     * @return the student if they are found, null otherwise.
+     */
     public Student place(Student student) {
         for (int i = 0; i < size; i++) {
             if (roster[i].equals(student)) {
@@ -289,5 +301,3 @@ public class Roster {
         return null;
     }
 }
-
-
