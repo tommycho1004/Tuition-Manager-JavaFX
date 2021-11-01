@@ -237,7 +237,6 @@ public class HelloController {
         finAidAmountEnter.setDisable(true);
         setFinAidButton.setDisable(true);
         tuitionTitle.setDisable(true);
-        paymentSign.setDisable(true);
         paymentEnter.clear();
         paymentEnter.setDisable(true);
         paymentDateEnter.setDisable(true);
@@ -291,8 +290,7 @@ public class HelloController {
                             output.appendText("Student added.\n");
                         }
                     } else if (nonResidentType.getText().equals("International")) {
-                        International international = new
-                                International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
+                        International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
                         if (numCreditHrs < 12) {
                             output.appendText("International students must enroll at least 12 credits.\n");
                         } else if (!roster.add(international)) {
@@ -473,7 +471,14 @@ public class HelloController {
                     RadioButton nonRes = (RadioButton) nonResType.getSelectedToggle();
                     if (nonRes.getText().equals("TriState")) {
                         RadioButton state = (RadioButton) triStateType.getSelectedToggle();
-                        TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state.getText());
+                        String state1 = null;
+                        if (state.getText().equals("New York")) {
+                            state1 = "ny";
+                        }
+                        if (state.getText().equals("Connecticut")) {
+                            state1 = "ct";
+                        }
+                        TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state1);
                         triState.tuitionDue();
                         String tuition = String.valueOf(triState.getTuitionDue());
                         output.appendText("Tuition Due: " + tuition + "\n");
@@ -627,22 +632,19 @@ public class HelloController {
             String name = nameEnter2.getText();
             RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
             Student temp = new Student(name, majors.getText());
-            Student temp2 = roster.place(temp);
-            if (roster.find(temp) == -1) {
+            int eligibility = roster.place(temp);
+            if (eligibility == -1) {
                 output.appendText("Student not found.\n");
                 return;
-            } else {
-                tuitionTitle.setDisable(false);
-                paymentSign.setDisable(false);
-                payButton.setDisable(false);
-                paymentEnter.setDisable(false);
-                paymentDateEnter.setDisable(false);
             }
-            if (temp2 instanceof International) {
+            tuitionTitle.setDisable(false);
+            payButton.setDisable(false);
+            paymentEnter.setDisable(false);
+            paymentDateEnter.setDisable(false);
+            if (eligibility == 1) {
                 setStudyAbroadButton.setDisable(false);
                 setNotStudyAbroadButton.setDisable(false);
-            }
-            if (temp2 instanceof Resident) {
+            } else if (eligibility == 0) {
                 setFinAidButton.setDisable(false);
                 finAidAmountEnter.setDisable(false);
             }
@@ -724,6 +726,6 @@ public class HelloController {
         } else {
             output.appendText("Tuition updated.\n");
         }
-        clearer();
+        clearer2();
     }
 }
