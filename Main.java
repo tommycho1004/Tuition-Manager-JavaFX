@@ -1,25 +1,23 @@
-package Project3;
+package com.example.smproject3;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-//project 3 example can be found in lecture 10 1:11:00
+import java.io.IOException;
 
-public class Main extends Application {
-
+public class HelloApplication extends Application {
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
-        primaryStage.setTitle("Tuition Manager");
-        primaryStage.setScene(new Scene(root, 775, 800));
-        primaryStage.show();
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 775, 800);
+        stage.setTitle("Tuition Manager");
+        stage.setScene(scene);
+        stage.show();
     }
 
-
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
