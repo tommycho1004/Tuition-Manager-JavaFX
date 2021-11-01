@@ -7,6 +7,12 @@ import javafx.scene.input.KeyEvent;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The controller class that holds all instance variables and methods for the GUI
+ *
+ * @author Tommy Cho, Neha Gudur
+ */
+
 public class HelloController {
 
     private Roster roster = new Roster();
@@ -28,6 +34,9 @@ public class HelloController {
     private RadioButton baButton2;
 
     @FXML
+    private RadioButton baButton4;
+
+    @FXML
     private Button calculateButton;
 
     @FXML
@@ -40,6 +49,9 @@ public class HelloController {
     private RadioButton csButton2;
 
     @FXML
+    private RadioButton csButton4;
+
+    @FXML
     private RadioButton ctButton;
 
     @FXML
@@ -47,6 +59,9 @@ public class HelloController {
 
     @FXML
     private RadioButton eeButton2;
+
+    @FXML
+    private RadioButton eeButton4;
 
     @FXML
     private TextField finAidAmountEnter;
@@ -64,7 +79,13 @@ public class HelloController {
     private RadioButton itButton2;
 
     @FXML
+    private RadioButton itButton4;
+
+    @FXML
     private ToggleGroup majors;
+
+    @FXML
+    private ToggleGroup majors4;
 
     @FXML
     private RadioButton meButton;
@@ -73,10 +94,16 @@ public class HelloController {
     private RadioButton meButton2;
 
     @FXML
+    private RadioButton meButton4;
+
+    @FXML
     private TextField nameEnter;
 
     @FXML
     private TextField nameEnter2;
+
+    @FXML
+    private TextField nameEnter4;
 
     @FXML
     private ToggleGroup nonResType;
@@ -118,6 +145,12 @@ public class HelloController {
     private Button setFinAidButton;
 
     @FXML
+    private Button setNotStudyAbroadButton;
+
+    @FXML
+    private Button setStudyAbroadButton;
+
+    @FXML
     private CheckBox studyAbroadButton;
 
     @FXML
@@ -131,7 +164,6 @@ public class HelloController {
 
     @FXML
     private Button tuitionDueButton;
-
 
 
     @FXML
@@ -285,12 +317,11 @@ public class HelloController {
         return true;
     }
 
-    public boolean dateChecker(){
-        if (paymentDateEnter.getValue() == null){
+    public boolean dateChecker() {
+        if (paymentDateEnter.getValue() == null) {
             output.appendText("Date missing.\n");
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
@@ -334,24 +365,21 @@ public class HelloController {
             RadioButton major2 = (RadioButton) Major.getSelectedToggle();
             String major = major2.getText();
             double paymentAmount = Double.parseDouble(paymentEnter.getText());
-            if (dateChecker()){
+            if (dateChecker()) {
                 Date date = new Date(paymentDateEnter.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
                 if (!date.isValid()) {
                     output.appendText("Payment date invalid.\n");
-                }
-                else {
+                } else {
                     if (paymentAmount > 0.0) {
                         Student student = new Student(name, major);
-                        if (roster.find(student) == -1){
+                        if (roster.find(student) == -1) {
                             output.appendText("Student not found.\n");
-                        }
-                        else if (!roster.payTuition(student, paymentAmount, date)) {
+                        } else if (!roster.payTuition(student, paymentAmount, date)) {
                             output.appendText("Amount is greater than the amount due.\n");
                         } else {
                             output.appendText("Payment applied.\n");
                         }
-                    }
-                    else{
+                    } else {
                         output.appendText("Payment amount invalid.\n");
                     }
                 }
@@ -379,5 +407,33 @@ public class HelloController {
     @FXML
     void printRosterByPayment(ActionEvent event) {
 
+    }
+
+    //for fourth tab
+
+    @FXML
+    void setNotStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majors4.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setNotStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.");
+        } else {
+            output.appendText("Tuition updated.");
+        }
+    }
+
+    @FXML
+    void setStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majors4.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.");
+        } else {
+            output.appendText("Tuition updated.");
+        }
     }
 }
