@@ -3,17 +3,11 @@ package com.example.smproject3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 
 import java.time.format.DateTimeFormatter;
 
-/**
- * The controller class that holds all instance variables and methods for the GUI
- *
- * @author Tommy Cho, Neha Gudur
- */
-
 public class HelloController {
+
 
     private Roster roster = new Roster();
 
@@ -22,10 +16,10 @@ public class HelloController {
     int zero = 0;
 
     @FXML
-    private ToggleGroup Major;
+    private Button addButton;
 
     @FXML
-    private Button addButton;
+    private Button addInitialButton;
 
     @FXML
     private RadioButton baButton;
@@ -34,10 +28,10 @@ public class HelloController {
     private RadioButton baButton2;
 
     @FXML
-    private RadioButton baButton4;
+    private Button calculateButton;
 
     @FXML
-    private Button calculateButton;
+    private Button calculateInitialButton;
 
     @FXML
     private TextField creditHrs;
@@ -49,9 +43,6 @@ public class HelloController {
     private RadioButton csButton2;
 
     @FXML
-    private RadioButton csButton4;
-
-    @FXML
     private RadioButton ctButton;
 
     @FXML
@@ -59,9 +50,6 @@ public class HelloController {
 
     @FXML
     private RadioButton eeButton2;
-
-    @FXML
-    private RadioButton eeButton4;
 
     @FXML
     private TextField finAidAmountEnter;
@@ -79,13 +67,13 @@ public class HelloController {
     private RadioButton itButton2;
 
     @FXML
-    private RadioButton itButton4;
-
-    @FXML
     private ToggleGroup majors;
 
     @FXML
-    private ToggleGroup majors4;
+    private ToggleGroup majorsMan;
+
+    @FXML
+    private Button manageButton;
 
     @FXML
     private RadioButton meButton;
@@ -94,16 +82,10 @@ public class HelloController {
     private RadioButton meButton2;
 
     @FXML
-    private RadioButton meButton4;
-
-    @FXML
     private TextField nameEnter;
 
     @FXML
     private TextField nameEnter2;
-
-    @FXML
-    private TextField nameEnter4;
 
     @FXML
     private ToggleGroup nonResType;
@@ -127,6 +109,9 @@ public class HelloController {
     private TextField paymentEnter;
 
     @FXML
+    private Label paymentSign;
+
+    @FXML
     private Button printButton;
 
     @FXML
@@ -137,6 +122,9 @@ public class HelloController {
 
     @FXML
     private Button removeButton;
+
+    @FXML
+    private Button removeInitialButton;
 
     @FXML
     private RadioButton residentButton;
@@ -160,14 +148,18 @@ public class HelloController {
     private ToggleGroup triStateType;
 
     @FXML
-    private TextField tuitionDueAmt;
-
-    @FXML
     private Button tuitionDueButton;
 
+    @FXML
+    private Label tuitionTitle;
 
     @FXML
     boolean creditChecker() {
+        String credit = creditHrs.getText();
+        if (credit.isEmpty()) {
+            output.appendText("Credit hours missing.\n");
+            return false;
+        }
         try {
             int numCreditHrs = Integer.parseInt(creditHrs.getText());
         } catch (NumberFormatException e) {
@@ -188,6 +180,7 @@ public class HelloController {
         } else return true;
     }
 
+    @FXML
     public boolean dataChecker() {
         String stuName = nameEnter.getText();
         if (stuName.isEmpty()) {
@@ -205,14 +198,44 @@ public class HelloController {
             return false;
         }
         RadioButton tri = (RadioButton) triStateType.getSelectedToggle();
-        if (nonResidentButton.isSelected() && triStateButton.isSelected()) ;
-        {
+        if (nonResidentButton.isSelected() && triStateButton.isSelected()) {
             if (tri == null) {
                 output.appendText("Tri-state data missing.\n");
                 return false;
             }
         }
         return true;
+    }
+
+    @FXML
+    void clearer() {
+        nameEnter.clear();
+        majors.selectToggle(null);
+        ifResident.selectToggle(null);
+        nonResType.selectToggle(null);
+        triStateType.selectToggle(null);
+        studyAbroadButton.setSelected(false);
+        creditHrs.clear();
+        tuitionDueButton.setVisible(false);
+        removeButton.setVisible(false);
+        addButton.setVisible(false);
+        tuitionDueButton.setDisable(true);
+        removeButton.setDisable(true);
+        addButton.setDisable(true);
+        nameEnter.setDisable(true);
+        eeButton.setDisable(true);
+        csButton.setDisable(true);
+        meButton.setDisable(true);
+        itButton.setDisable(true);
+        baButton.setDisable(true);
+        residentButton.setDisable(true);
+        nonResidentButton.setDisable(true);
+        triStateButton.setDisable(true);
+        internationalButton.setDisable(true);
+        nyButton.setDisable(true);
+        ctButton.setDisable(true);
+        studyAbroadButton.setDisable(true);
+        creditHrs.setDisable(true);
     }
 
 
@@ -224,18 +247,98 @@ public class HelloController {
             String stuMajor = major.getText();
             String stuName = nameEnter.getText();
             RadioButton status = (RadioButton) ifResident.getSelectedToggle();
-            String statusText = status.getText();
-            output.appendText(statusText);
-            /*if (statusText.equals("Resident")) {
+            if (status.getText().equals("Resident")) {
                 Resident resident = new Resident(stuName, stuMajor, numCreditHrs);
                 if (!roster.add(resident)) {
                     output.appendText("Student is already in the roster.\n");
                 } else {
-                    //roster.add(resident); //(try)
                     output.appendText("Student added.\n");
                 }
-            }*/
+            }
+            if (status.getText().equals("Non-Resident")) {
+                if (nonResType.getSelectedToggle() == null) {
+                    NonResident nonResident = new NonResident(stuName, stuMajor, numCreditHrs);
+                    if (!roster.add(nonResident)) {
+                        output.appendText("Student is already in the roster.\n");
+                    } else {
+                        output.appendText("Student added.\n");
+                    }
+                } else {
+                    RadioButton nonResidentType = (RadioButton) nonResType.getSelectedToggle();
+                    if (nonResidentType.getText().equals("TriState")) {
+                        RadioButton state = (RadioButton) triStateType.getSelectedToggle();
+                        String state1 = null;
+                        if (state.getText().equals("New York")) {
+                            state1 = "ny";
+                        }
+                        if (state.getText().equals("Connecticut")) {
+                            state1 = "ct";
+                        }
+                        TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state1);
+                        if (!roster.add(triState)) {
+                            output.appendText("Student is already in the roster.\n");
+                        } else {
+                            output.appendText("Student added.\n");
+                        }
+                    } else if (nonResidentType.getText().equals("International")) {
+                        International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
+                        if (numCreditHrs < 12) {
+                            output.appendText("International students must enroll at least 12 credits.\n");
+                        } else if (!roster.add(international)) {
+                            output.appendText("Student is already in the roster.\n");
+                        } else {
+                            output.appendText("Student added.\n");
+                        }
+                    }
+                }
+            }
         }
+        clearer();
+    }
+
+    @FXML
+    void addInitialButtonClick(ActionEvent event) {
+        clearer();
+        nameEnter.setDisable(false);
+        eeButton.setDisable(false);
+        csButton.setDisable(false);
+        meButton.setDisable(false);
+        itButton.setDisable(false);
+        baButton.setDisable(false);
+        residentButton.setDisable(false);
+        nonResidentButton.setDisable(false);
+        creditHrs.setDisable(false);
+        addButton.setVisible(true);
+        addButton.setDisable(false);
+    }
+
+    @FXML
+    void calculateInitialButtonClicked(ActionEvent event) {
+        clearer();
+        nameEnter.setDisable(false);
+        eeButton.setDisable(false);
+        csButton.setDisable(false);
+        meButton.setDisable(false);
+        itButton.setDisable(false);
+        baButton.setDisable(false);
+        residentButton.setDisable(false);
+        nonResidentButton.setDisable(false);
+        creditHrs.setDisable(false);
+        tuitionDueButton.setVisible(true);
+        tuitionDueButton.setDisable(false);
+    }
+
+    @FXML
+    void removeInitialButtonClicked(ActionEvent event) {
+        clearer();
+        nameEnter.setDisable(false);
+        eeButton.setDisable(false);
+        csButton.setDisable(false);
+        meButton.setDisable(false);
+        itButton.setDisable(false);
+        baButton.setDisable(false);
+        removeButton.setVisible(true);
+        removeButton.setDisable(false);
     }
 
     @FXML
@@ -243,8 +346,7 @@ public class HelloController {
         studyAbroadButton.setDisable(false);
         nyButton.setDisable(true);
         ctButton.setDisable(true);
-        nyButton.setSelected(false);
-        ctButton.setSelected(false);
+        triStateType.selectToggle(null);
     }
 
     @FXML
@@ -255,7 +357,23 @@ public class HelloController {
 
     @FXML
     void removeButtonClick(ActionEvent event) {
-
+        String stuName = nameEnter.getText();
+        if (stuName.isEmpty()) {
+            output.appendText("Name data missing.\n");
+            return;
+        }
+        RadioButton major = (RadioButton) majors.getSelectedToggle();
+        if (major == null) {
+            output.appendText("Major data missing.\n");
+            return;
+        }
+        Student temp = new Student(stuName, major.getText());
+        if (!roster.remove(temp)) {
+            output.appendText("Student is not in the roster.\n");
+        } else {
+            output.appendText("Student removed from the roster.\n");
+        }
+        clearer();
     }
 
     @FXML
@@ -265,11 +383,9 @@ public class HelloController {
         studyAbroadButton.setDisable(true);
         nyButton.setDisable(true);
         ctButton.setDisable(true);
-        triStateButton.setSelected(false);
-        internationalButton.setSelected(false);
+        nonResType.selectToggle(null);
         studyAbroadButton.setSelected(false);
-        nyButton.setSelected(false);
-        ctButton.setSelected(false);
+        triStateType.selectToggle(null);
     }
 
     @FXML
@@ -277,30 +393,51 @@ public class HelloController {
         nyButton.setDisable(false);
         ctButton.setDisable(false);
         studyAbroadButton.setDisable(true);
-        internationalButton.setSelected(false);
         studyAbroadButton.setSelected(false);
     }
 
     @FXML
     void tuitionDueButtonClick(ActionEvent event) {
-
+        if (creditChecker() && dataChecker()) {
+            int numCreditHrs = Integer.parseInt(creditHrs.getText());
+            RadioButton major = (RadioButton) majors.getSelectedToggle();
+            String stuMajor = major.getText();
+            String stuName = nameEnter.getText();
+            RadioButton status = (RadioButton) ifResident.getSelectedToggle();
+            Student student = new Student(stuName, stuMajor);
+            if (status.getText().equals("Resident")) {
+                Resident resident = new Resident(stuName, stuMajor, numCreditHrs);
+                resident.tuitionDue();
+                String tuition = String.valueOf(resident.getTuitionDue());
+                output.appendText("Tuition Due: " + tuition + "\n");
+            } else if (status.getText().equals("Non-Resident")) {
+                if (nonResType.getSelectedToggle() == (null)) {
+                    NonResident nonResident = new NonResident(stuName, stuMajor, numCreditHrs);
+                    nonResident.tuitionDue();
+                    String tuition = String.valueOf(nonResident.getTuitionDue());
+                    output.appendText("Tuition Due: " + tuition + "\n");
+                } else {
+                    RadioButton nonRes = (RadioButton) nonResType.getSelectedToggle();
+                    if (nonRes.getText().equals("TriState")) {
+                        RadioButton state = (RadioButton) triStateType.getSelectedToggle();
+                        TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state.getText());
+                        triState.tuitionDue();
+                        String tuition = String.valueOf(triState.getTuitionDue());
+                        output.appendText("Tuition Due: " + tuition + "\n");
+                    }
+                    if (nonRes.getText().equals("International")) {
+                        International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
+                        international.tuitionDue();
+                        String tuition = String.valueOf(international.getTuitionDue());
+                        output.appendText("Tuition Due: " + tuition + "\n");
+                    }
+                }
+            }
+        }
+        clearer();
     }
 
     //2nd Tab Methods Here
-    @FXML
-    void financialAidEnter(KeyEvent event) {
-        setFinAidButton.setDisable(false);
-        payButton.setDisable(true);
-        paymentEnter.clear();
-        paymentDateEnter.setValue(null);
-    }
-
-    @FXML
-    void paymentAmountEnter(KeyEvent event) {
-        payButton.setDisable(false);
-        setFinAidButton.setDisable(true);
-        finAidAmountEnter.clear();
-    }
 
     @FXML
     public boolean dataChecker2() {
@@ -309,7 +446,7 @@ public class HelloController {
             output.appendText("Name data missing.\n");
             return false;
         }
-        RadioButton major = (RadioButton) Major.getSelectedToggle();
+        RadioButton major = (RadioButton) majorsMan.getSelectedToggle();
         if (major == null) {
             output.appendText("Major data missing.\n");
             return false;
@@ -338,8 +475,15 @@ public class HelloController {
     @FXML
     void setFinAid(ActionEvent event) {
         String name = nameEnter2.getText();
-        RadioButton major2 = (RadioButton) Major.getSelectedToggle();
+        RadioButton major2 = (RadioButton) majorsMan.getSelectedToggle();
         String major = major2.getText();
+        try {
+            double finAidAmount = Double.parseDouble(finAidAmountEnter.getText());
+        } catch (NumberFormatException e) {
+            output.appendText("Payment amount invalid.\n");
+            clearer2();
+            return;
+        }
         double finAidAmount = Double.parseDouble(finAidAmountEnter.getText());
         if (financialAidChecker(finAidAmount)) {
             Student temp = new Student(name, major);
@@ -356,14 +500,22 @@ public class HelloController {
                 output.appendText("Parttime student doesn't qualify for the award.");
             }
         }
+        clearer2();
     }
 
     @FXML
     void payTuition(ActionEvent event) {
         if (dataChecker2()) {
             String name = nameEnter2.getText();
-            RadioButton major2 = (RadioButton) Major.getSelectedToggle();
+            RadioButton major2 = (RadioButton) majorsMan.getSelectedToggle();
             String major = major2.getText();
+            try {
+                double paymentAmount = Double.parseDouble(paymentEnter.getText());
+            } catch (NumberFormatException e) {
+                output.appendText("Payment amount invalid.\n");
+                clearer2();
+                return;
+            }
             double paymentAmount = Double.parseDouble(paymentEnter.getText());
             if (dateChecker()) {
                 Date date = new Date(paymentDateEnter.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
@@ -385,55 +537,106 @@ public class HelloController {
                 }
             }
         }
+        clearer2();
+    }
+
+    @FXML
+    void setNotStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setNotStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.\n");
+        } else {
+            output.appendText("Tuition updated.\n");
+        }
+        clearer2();
+    }
+
+    @FXML
+    void clearer2() {
+        nameEnter2.clear();
+        majorsMan.selectToggle(null);
+        setStudyAbroadButton.setDisable(true);
+        setNotStudyAbroadButton.setDisable(true);
+        finAidAmountEnter.clear();
+        finAidAmountEnter.setDisable(true);
+        setFinAidButton.setDisable(true);
+        tuitionTitle.setDisable(true);
+        paymentSign.setDisable(true);
+        paymentEnter.clear();
+        paymentEnter.setDisable(true);
+        paymentDateEnter.setDisable(true);
+        payButton.setDisable(true);
+        paymentDateEnter.setValue(null);
+    }
+
+    @FXML
+    void setStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.\n");
+        } else {
+            output.appendText("Tuition updated.\n");
+        }
+        clearer();
+    }
+
+    @FXML
+    void manageButtonClick(ActionEvent event) {
+        if (dataChecker2()) {
+            String name = nameEnter2.getText();
+            RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
+            Student temp = new Student(name, majors.getText());
+            Student temp2 = roster.place(temp);
+            if (roster.find(temp) == -1) {
+                output.appendText("Student not found.\n");
+                return;
+            } else {
+                tuitionTitle.setDisable(false);
+                paymentSign.setDisable(false);
+                payButton.setDisable(false);
+                paymentEnter.setDisable(false);
+                paymentDateEnter.setDisable(false);
+            }
+            if (temp2 instanceof International) {
+                setStudyAbroadButton.setDisable(false);
+                setNotStudyAbroadButton.setDisable(false);
+            }
+            if (temp2 instanceof Resident) {
+                setFinAidButton.setDisable(false);
+                finAidAmountEnter.setDisable(false);
+            }
+        }
     }
 
     //for third tab
 
     @FXML
     void calculateTuition(ActionEvent event) {
-
+        roster.calculate();
+        output.appendText("Calculation completed.\n");
     }
 
     @FXML
     void printRoster(ActionEvent event) {
-
+        output.appendText(roster.print());
     }
 
     @FXML
     void printRosterByName(ActionEvent event) {
-
+        output.appendText(roster.printByName());
     }
 
     @FXML
     void printRosterByPayment(ActionEvent event) {
-
+        output.appendText(roster.printByPaymentDate());
     }
 
-    //for fourth tab
-
-    @FXML
-    void setNotStudyAbroad(ActionEvent event) {
-        String name = nameEnter2.getText();
-        RadioButton majors = (RadioButton) majors4.getSelectedToggle();
-        String major = majors.getText();
-        International temp = new International(name, major);
-        if (!roster.setNotStudyAbroad(temp)) {
-            output.appendText("Couldn't find the international student.");
-        } else {
-            output.appendText("Tuition updated.");
-        }
-    }
-
-    @FXML
-    void setStudyAbroad(ActionEvent event) {
-        String name = nameEnter2.getText();
-        RadioButton majors = (RadioButton) majors4.getSelectedToggle();
-        String major = majors.getText();
-        International temp = new International(name, major);
-        if (!roster.setStudyAbroad(temp)) {
-            output.appendText("Couldn't find the international student.");
-        } else {
-            output.appendText("Tuition updated.");
-        }
-    }
 }
+
+
