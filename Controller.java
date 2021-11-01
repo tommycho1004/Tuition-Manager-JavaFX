@@ -464,13 +464,13 @@ public class HelloController {
                 Resident resident = new Resident(stuName, stuMajor, numCreditHrs);
                 resident.tuitionDue();
                 String tuition = String.valueOf(resident.getTuitionDue());
-                output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
+                output.appendText("Tuition Due: " + dec.format(Double.parseDouble(tuition)) + "\n");
             } else if (status.getText().equals("Non-Resident")) {
                 if (nonResType.getSelectedToggle() == (null)) {
                     NonResident nonResident = new NonResident(stuName, stuMajor, numCreditHrs);
                     nonResident.tuitionDue();
                     String tuition = String.valueOf(nonResident.getTuitionDue());
-                    output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
+                    output.appendText("Tuition Due: " + dec.format(Double.parseDouble(tuition)) + "\n");
                 } else {
                     RadioButton nonRes = (RadioButton) nonResType.getSelectedToggle();
                     if (nonRes.getText().equals("TriState")) {
@@ -485,20 +485,21 @@ public class HelloController {
                         TriState triState = new TriState(stuName, stuMajor, numCreditHrs, state1);
                         triState.tuitionDue();
                         String tuition = String.valueOf(triState.getTuitionDue());
-                        output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
+                        output.appendText("Tuition Due: " + dec.format(Double.parseDouble(tuition)) + "\n");
                     }
                     if (nonRes.getText().equals("International")) {
                         International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
                         international.tuitionDue();
                         String tuition = String.valueOf(international.getTuitionDue());
-                        output.appendText("Tuition Due: " + dec.format(tuition) + "\n");
+                        output.appendText("Tuition Due: " + dec.format(Double.parseDouble(tuition)) + "\n");
                     }
                 }
             }
         }
         clearer();
     }
-
+    
+    
     //2nd Tab Methods Here
 
     /**
