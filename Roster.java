@@ -1,4 +1,5 @@
 package com.example.smproject3;
+
 /**
  * The Roster class used as the container for students.
  * This class contains methods to perform several functions to the roster of students.
@@ -91,13 +92,16 @@ public class Roster {
      */
     public String print() {
         //System.out.println("* list of students in the roster **");
+        if (size == 0) {
+            return "Student roster is empty!\n";
+        }
         String result = "* list of students in the roster **";
         for (int i = 0; i < size; i++) {
             //System.out.println(roster[i].toString());
             result = result + "\n" + roster[i].toString();
         }
         //System.out.println("* end of roster **");
-        result = result + "\n * end of roster **";
+        result = result + "\n * end of roster **\n";
         return result;
     }
 
@@ -105,6 +109,9 @@ public class Roster {
      * A method to print the roster of students by order of alphabetical first name
      */
     public String printByName() {
+        if (size == 0) {
+            return "Student roster is empty!\n";
+        }
         Student[] newArray = roster;
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
@@ -122,7 +129,7 @@ public class Roster {
             result = result + "\n" + newArray[i].toString();
         }
         //System.out.println("* end of roster **");
-        result = result + "\n * end of roster **";
+        result = result + "\n * end of roster **\n";
         return result;
     }
 
@@ -131,6 +138,9 @@ public class Roster {
      * Only prints students who have paid some amount already
      */
     public String printByPaymentDate() {
+        if (size == 0) {
+            return "Student roster is empty!\n";
+        }
         int paymentSize = 0;
         for (int i = 0; i < size; i++) {
             if (roster[i].getMadePayment()) {
@@ -139,7 +149,7 @@ public class Roster {
         }
         if (paymentSize == 0) {
             //System.out.println("There are no students who have paid yet.");
-            return "There are no students who have paid yet.";
+            return "There are no students who have paid yet.\n";
         } else {
             Student[] newArray = new Student[paymentSize];
             int k = 0;
@@ -165,7 +175,7 @@ public class Roster {
                 result = result + "\n" + newArray[i].toString();
             }
             //System.out.println("* end of roster **");
-            result = result + "\n * end of roster **";
+            result = result + "\n * end of roster **\n";
             return result;
         }
     }
@@ -229,6 +239,23 @@ public class Roster {
         } else return false; //student is not found
     }
 
+    public boolean setNotStudyAbroad(Student student) {
+        if (find(student) != -1) {
+            if (student instanceof International) {
+                ((International) student).setNotStudyAbroad();
+                if (student.getCreditHours() > 12) {
+                    student.setCreditHours(12);
+                }
+                student.setTotalPayment(0);
+                student.setTuitionDue(0);
+                Date temp = new Date("0/0/0");
+                student.setLastPaid(temp);
+                student.tuitionDue();
+                return true;
+            } else return false;
+        } else return false;
+    }
+
     /**
      * A method for the command to set financial aid of a resident student.
      *
@@ -252,4 +279,15 @@ public class Roster {
             } else return 1;
         } else return 0;
     }
+
+    public Student place(Student student) {
+        for (int i = 0; i < size; i++) {
+            if (roster[i].equals(student)) {
+                return roster[i];
+            }
+        }
+        return null;
+    }
 }
+
+
