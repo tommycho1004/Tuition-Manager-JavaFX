@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 import java.text.DecimalFormat;
 
 /**
@@ -25,6 +26,11 @@ public class International extends NonResident {
         }
         this.studyAbroad = true;
     }
+
+    public void setNotStudyAbroad() {
+        this.studyAbroad = false;
+    }
+
 
     /**
      * Parameterized constructor for an international student that calls the super constructor.
