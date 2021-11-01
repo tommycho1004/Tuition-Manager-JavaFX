@@ -3,156 +3,135 @@ package com.example.smproject3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 
 import java.time.format.DateTimeFormatter;
 
-public class HelloController {
+/**
+ * The controller class that holds all instance variables and methods for the GUI
+ *
+ * @author Tommy Cho, Neha Gudur
+ */
 
+public class HelloController {
 
     private Roster roster = new Roster();
 
-    int minCredits = 3;
-    int maxCredits = 24;
-    int zero = 0;
+    //static variables
+    private final static int minCredits = 3;
+    private final static int maxCredits = 24;
+    private final static int zero = 0;
 
+    //FXML Instance Variables
     @FXML
     private Button addButton;
-
     @FXML
     private Button addInitialButton;
-
     @FXML
     private RadioButton baButton;
-
     @FXML
     private RadioButton baButton2;
-
+    @FXML
+    private RadioButton baButton4;
     @FXML
     private Button calculateButton;
-
     @FXML
     private Button calculateInitialButton;
-
     @FXML
     private TextField creditHrs;
-
     @FXML
     private RadioButton csButton;
-
     @FXML
     private RadioButton csButton2;
-
+    @FXML
+    private RadioButton csButton4;
     @FXML
     private RadioButton ctButton;
-
     @FXML
     private RadioButton eeButton;
-
     @FXML
     private RadioButton eeButton2;
-
+    @FXML
+    private RadioButton eeButton4;
     @FXML
     private TextField finAidAmountEnter;
-
     @FXML
     private ToggleGroup ifResident;
-
     @FXML
     private RadioButton internationalButton;
-
     @FXML
     private RadioButton itButton;
-
     @FXML
     private RadioButton itButton2;
-
+    @FXML
+    private RadioButton itButton4;
     @FXML
     private ToggleGroup majors;
-
     @FXML
     private ToggleGroup majorsMan;
-
     @FXML
     private Button manageButton;
-
     @FXML
     private RadioButton meButton;
-
     @FXML
     private RadioButton meButton2;
-
+    @FXML
+    private RadioButton meButton4;
     @FXML
     private TextField nameEnter;
-
     @FXML
     private TextField nameEnter2;
-
+    @FXML
+    private TextField nameEnter4;
     @FXML
     private ToggleGroup nonResType;
-
     @FXML
     private RadioButton nonResidentButton;
-
     @FXML
     private RadioButton nyButton;
-
     @FXML
     private TextArea output;
-
     @FXML
     private Button payButton;
-
     @FXML
     private DatePicker paymentDateEnter;
-
     @FXML
     private TextField paymentEnter;
-
     @FXML
     private Label paymentSign;
-
     @FXML
     private Button printButton;
-
     @FXML
     private Button printByNameButton;
-
     @FXML
     private Button printByPaymentButton;
-
     @FXML
     private Button removeButton;
-
     @FXML
     private Button removeInitialButton;
-
     @FXML
     private RadioButton residentButton;
-
     @FXML
     private Button setFinAidButton;
-
     @FXML
     private Button setNotStudyAbroadButton;
-
     @FXML
     private Button setStudyAbroadButton;
-
     @FXML
     private CheckBox studyAbroadButton;
-
     @FXML
     private RadioButton triStateButton;
-
     @FXML
     private ToggleGroup triStateType;
-
     @FXML
     private Button tuitionDueButton;
-
     @FXML
     private Label tuitionTitle;
 
+    /**
+     * A helper method that checks for errors in the credit hours input from the user
+     * @return true if all checks pass, false otherwise.
+     */
     @FXML
     boolean creditChecker() {
         String credit = creditHrs.getText();
@@ -180,6 +159,10 @@ public class HelloController {
         } else return true;
     }
 
+    /**
+     * A helper method that checks if the input data is valid from the user
+     * @return true if the data is valid and completed, false otherwise
+     */
     @FXML
     public boolean dataChecker() {
         String stuName = nameEnter.getText();
@@ -207,6 +190,9 @@ public class HelloController {
         return true;
     }
 
+    /**
+     * A helper method that clears all the data fields so the user can iinput new data with ease.
+     */
     @FXML
     void clearer() {
         nameEnter.clear();
@@ -238,7 +224,31 @@ public class HelloController {
         creditHrs.setDisable(true);
     }
 
+    /**
+     * A helper method similar to the one above that clears data fields in tab 2.
+     */
+    @FXML
+    void clearer2() {
+        nameEnter2.clear();
+        majorsMan.selectToggle(null);
+        setStudyAbroadButton.setDisable(true);
+        setNotStudyAbroadButton.setDisable(true);
+        finAidAmountEnter.clear();
+        finAidAmountEnter.setDisable(true);
+        setFinAidButton.setDisable(true);
+        tuitionTitle.setDisable(true);
+        paymentSign.setDisable(true);
+        paymentEnter.clear();
+        paymentEnter.setDisable(true);
+        paymentDateEnter.setDisable(true);
+        payButton.setDisable(true);
+        paymentDateEnter.setValue(null);
+    }
 
+    /**
+     * A method that handles the event in which the add button is clicked.
+     * @param event add button click
+     */
     @FXML
     void addButtonClick(ActionEvent event) {
         if (creditChecker() && dataChecker()) {
@@ -281,7 +291,8 @@ public class HelloController {
                             output.appendText("Student added.\n");
                         }
                     } else if (nonResidentType.getText().equals("International")) {
-                        International international = new International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
+                        International international = new
+                                International(stuName, stuMajor, numCreditHrs, studyAbroadButton.isSelected());
                         if (numCreditHrs < 12) {
                             output.appendText("International students must enroll at least 12 credits.\n");
                         } else if (!roster.add(international)) {
@@ -296,6 +307,10 @@ public class HelloController {
         clearer();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void addInitialButtonClick(ActionEvent event) {
         clearer();
@@ -312,6 +327,10 @@ public class HelloController {
         addButton.setDisable(false);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void calculateInitialButtonClicked(ActionEvent event) {
         clearer();
@@ -328,6 +347,10 @@ public class HelloController {
         tuitionDueButton.setDisable(false);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void removeInitialButtonClicked(ActionEvent event) {
         clearer();
@@ -341,6 +364,11 @@ public class HelloController {
         removeButton.setDisable(false);
     }
 
+    /**
+     * A method to handle the event where the international button is clicked.
+     * This method hides data fields not applicable to international students to control data input.
+     * @param event international button is clicked
+     */
     @FXML
     void intButtonClicked(ActionEvent event) {
         studyAbroadButton.setDisable(false);
@@ -349,12 +377,22 @@ public class HelloController {
         triStateType.selectToggle(null);
     }
 
+    /**
+     * A method to handle the event where the nonresident button is clicked.
+     * This method hides data fields not applicable to nonresident students to control data input.
+     * @param event nonresident button is clicked
+     */
     @FXML
     void nonResidentButtonClick(ActionEvent event) {
         triStateButton.setDisable(false);
         internationalButton.setDisable(false);
     }
 
+    /**
+     * A method to handle the event where the remove button is clicked.
+     * This method will remove a certain student from the roster.
+     * @param event remove button is clicked
+     */
     @FXML
     void removeButtonClick(ActionEvent event) {
         String stuName = nameEnter.getText();
@@ -376,6 +414,11 @@ public class HelloController {
         clearer();
     }
 
+    /**
+     * A method to handle the event where the resident button is clicked.
+     * This method hides data fields not applicable to resident students to control data input.
+     * @param event resident button is clicked
+     */
     @FXML
     void residentButtonClick(ActionEvent event) {
         triStateButton.setDisable(true);
@@ -388,6 +431,11 @@ public class HelloController {
         triStateType.selectToggle(null);
     }
 
+    /**
+     * A method to handle the event where the tristate button is clicked.
+     * This method hides data fields not applicable to tristate students to control data input.
+     * @param event tristate button is clicked
+     */
     @FXML
     void triStateButtonClicked(ActionEvent event) {
         nyButton.setDisable(false);
@@ -396,6 +444,11 @@ public class HelloController {
         studyAbroadButton.setSelected(false);
     }
 
+    /**
+     * A method to handle the event where the tuition due button is clicked.
+     * This method will output the tuition that a certain student has due.
+     * @param event tuition due button clicked
+     */
     @FXML
     void tuitionDueButtonClick(ActionEvent event) {
         if (creditChecker() && dataChecker()) {
@@ -439,6 +492,10 @@ public class HelloController {
 
     //2nd Tab Methods Here
 
+    /**
+     * A helper method that checks if the data inputs are valid.
+     * @return true if all data is valid and complete, false otherwise.
+     */
     @FXML
     public boolean dataChecker2() {
         String stuName = nameEnter2.getText();
@@ -454,6 +511,10 @@ public class HelloController {
         return true;
     }
 
+    /**
+     * A helper method to check if the date is inputted or not.
+     * @return true if the date is inputted, false otherwise.
+     */
     public boolean dateChecker() {
         if (paymentDateEnter.getValue() == null) {
             output.appendText("Date missing.\n");
@@ -463,6 +524,11 @@ public class HelloController {
         }
     }
 
+    /**
+     * A helper method to check whether the financial aid amount is valid or not.
+     * @param financialAid amount of financial aid attempting to be paid.
+     * @return true if amount is valid, false otherwise
+     */
     public boolean financialAidChecker(double financialAid) {
         if (financialAid < 0 || financialAid > 10000) {
             output.appendText("Invalid amount.");
@@ -472,6 +538,11 @@ public class HelloController {
         }
     }
 
+    /**
+     * A method that handles the event where the set financial aid button is clicked.
+     * This method will set the financial aid of a student.
+     * @param event set financial aid button is clicked.
+     */
     @FXML
     void setFinAid(ActionEvent event) {
         String name = nameEnter2.getText();
@@ -503,6 +574,11 @@ public class HelloController {
         clearer2();
     }
 
+    /**
+     * A method that handles the event where the pay tuition button is clicked.
+     * This method will allow the student to pay a tuition towards their debt.
+     * @param event pay tuition button is clicked.
+     */
     @FXML
     void payTuition(ActionEvent event) {
         if (dataChecker2()) {
@@ -540,52 +616,11 @@ public class HelloController {
         clearer2();
     }
 
-    @FXML
-    void setNotStudyAbroad(ActionEvent event) {
-        String name = nameEnter2.getText();
-        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
-        String major = majors.getText();
-        International temp = new International(name, major);
-        if (!roster.setNotStudyAbroad(temp)) {
-            output.appendText("Couldn't find the international student.\n");
-        } else {
-            output.appendText("Tuition updated.\n");
-        }
-        clearer2();
-    }
-
-    @FXML
-    void clearer2() {
-        nameEnter2.clear();
-        majorsMan.selectToggle(null);
-        setStudyAbroadButton.setDisable(true);
-        setNotStudyAbroadButton.setDisable(true);
-        finAidAmountEnter.clear();
-        finAidAmountEnter.setDisable(true);
-        setFinAidButton.setDisable(true);
-        tuitionTitle.setDisable(true);
-        paymentSign.setDisable(true);
-        paymentEnter.clear();
-        paymentEnter.setDisable(true);
-        paymentDateEnter.setDisable(true);
-        payButton.setDisable(true);
-        paymentDateEnter.setValue(null);
-    }
-
-    @FXML
-    void setStudyAbroad(ActionEvent event) {
-        String name = nameEnter2.getText();
-        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
-        String major = majors.getText();
-        International temp = new International(name, major);
-        if (!roster.setStudyAbroad(temp)) {
-            output.appendText("Couldn't find the international student.\n");
-        } else {
-            output.appendText("Tuition updated.\n");
-        }
-        clearer();
-    }
-
+    /**
+     * A method to handle when the manage student button is clicked.
+     * This button allows the user to begin managing a certain student.
+     * @param event manage student button is clicked.
+     */
     @FXML
     void manageButtonClick(ActionEvent event) {
         if (dataChecker2()) {
@@ -616,27 +651,79 @@ public class HelloController {
 
     //for third tab
 
+    /**
+     * A method that handles the event where the calculate tuition button is clicked.
+     * This method calculates the tuition due for all students in the roster.
+     * @param event calculate button is clicked.
+     */
     @FXML
     void calculateTuition(ActionEvent event) {
         roster.calculate();
         output.appendText("Calculation completed.\n");
     }
 
+    /**
+     * A method that prints the roster of students in no specific order when the print button is clicked.
+     * @param event print roster button is clicked
+     */
     @FXML
     void printRoster(ActionEvent event) {
         output.appendText(roster.print());
     }
 
+    /**
+     * A method that prints the roster by name when the button is clicked.
+     * @param event print by name button is clicked.
+     */
     @FXML
     void printRosterByName(ActionEvent event) {
         output.appendText(roster.printByName());
     }
 
+    /**
+     * A method that prints the roster by students who have made a payment when the button is clicked.
+     * @param event print by payment button is clicked.
+     */
     @FXML
     void printRosterByPayment(ActionEvent event) {
         output.appendText(roster.printByPaymentDate());
     }
 
+    //for fourth tab
+
+    /**
+     * A method that sets the study abroad status of an international student to false when the button is clicked.
+     * @param event set not study abroad button is clicked.
+     */
+    @FXML
+    void setNotStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setNotStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.\n");
+        } else {
+            output.appendText("Tuition updated.\n");
+        }
+        clearer2();
+    }
+
+    /**
+     * A method that sets the study abroad status of an international student to true when the button is clicked.
+     * @param event set study abroad button is clicked.
+     */
+    @FXML
+    void setStudyAbroad(ActionEvent event) {
+        String name = nameEnter2.getText();
+        RadioButton majors = (RadioButton) majorsMan.getSelectedToggle();
+        String major = majors.getText();
+        International temp = new International(name, major);
+        if (!roster.setStudyAbroad(temp)) {
+            output.appendText("Couldn't find the international student.\n");
+        } else {
+            output.appendText("Tuition updated.\n");
+        }
+        clearer();
+    }
 }
-
-
