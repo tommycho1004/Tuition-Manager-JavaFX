@@ -249,9 +249,6 @@ public class Roster {
         if (find(student) != -1) {
             if (roster[find(student)] instanceof International) {
                 ((International) roster[find(student)]).setNotStudyAbroad();
-                if (roster[find(student)].getCreditHours() > 12) {
-                    roster[find(student)].setCreditHours(12);
-                }
                 roster[find(student)].setTotalPayment(0);
                 roster[find(student)].setTuitionDue(0);
                 Date temp = new Date("0/0/0");
@@ -292,12 +289,16 @@ public class Roster {
      * @param student student being found.
      * @return the student if they are found, null otherwise.
      */
-    public Student place(Student student) {
-        for (int i = 0; i < size; i++) {
-            if (roster[i].equals(student)) {
-                return roster[i];
-            }
+    public int place(Student student) {
+        if (find(student) == -1) {
+            return find(student);
         }
-        return null;
+        if ((roster[find(student)] instanceof Resident) && (roster[find(student)].getIsFullTime())) {
+            return 0;
+        }
+        if (roster[find(student)] instanceof International) {
+            return 1;
+        }
+        return find(student);
     }
 }
