@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 /**
  * This enum class defines the majors that a student can have.
  *
