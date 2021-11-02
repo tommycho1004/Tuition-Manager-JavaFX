@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 import java.text.DecimalFormat;
 
 /**
@@ -16,10 +17,11 @@ public class TriState extends NonResident {
 
     /**
      * Parameterized constructor for a tri-state that calls the super constructor.
-     * @param name Name of the student in string form
-     * @param major Major of the student in string form
+     *
+     * @param name        Name of the student in string form
+     * @param major       Major of the student in string form
      * @param creditHours Credit hours the student is taking in int form
-     * @param state State where the tri-state student is from
+     * @param state       State where the tri-state student is from
      */
     public TriState(String name, String major, int creditHours, String state) {
         super(name, major, creditHours);
@@ -28,6 +30,7 @@ public class TriState extends NonResident {
 
     /**
      * A helper method that returns the string of the state that a tri-state student is in.
+     *
      * @return NY or CT depending on the student's location in string form
      */
     public String stateString() {
@@ -70,6 +73,7 @@ public class TriState extends NonResident {
 
     /**
      * Converts the information of the student to a string format
+     *
      * @return the student's profile in the form of a string
      */
     @Override
