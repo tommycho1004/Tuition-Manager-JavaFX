@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
@@ -45,6 +46,7 @@ public class Date implements Comparable<Date> {
      * Returns today's date
      */
     Calendar today = Calendar.getInstance();
+
     public Date() {
         this.year = today.get(Calendar.YEAR);
         this.month = today.get(Calendar.MONTH);
