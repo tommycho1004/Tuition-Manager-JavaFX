@@ -249,11 +249,6 @@ public class Roster {
         if (find(student) != -1) {
             if (roster[find(student)] instanceof International) {
                 ((International) roster[find(student)]).setNotStudyAbroad();
-                roster[find(student)].setTotalPayment(0);
-                roster[find(student)].setTuitionDue(0);
-                Date temp = new Date("0/0/0");
-                roster[find(student)].setLastPaid(temp);
-                roster[find(student)].setMadePayment(false);
                 roster[find(student)].tuitionDue();
                 return true;
             } else return false; //student is not international
@@ -286,8 +281,9 @@ public class Roster {
 
     /**
      * A method that finds a specific student in the roster and returns that student.
+     *
      * @param student student being found.
-     * @return the student if they are found, null otherwise.
+     * @return -1 if they are found, 0 if eligible for financial aid, 1 if eligible for study abroad.
      */
     public int place(Student student) {
         if (find(student) == -1) {
@@ -302,3 +298,4 @@ public class Roster {
         return find(student);
     }
 }
+
