@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 /**
  * The profile class that is used to identify students.
  *
