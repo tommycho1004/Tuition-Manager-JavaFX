@@ -1,4 +1,5 @@
-package Project3;
+package com.example.smproject3;
+
 import java.text.DecimalFormat;
 
 /**
@@ -166,7 +167,7 @@ public class Student {
     /**
      * A method lets a student pay their tuition
      *
-     * @param amount integer value of how much the student is paying right now
+     * @param amount   integer value of how much the student is paying right now
      * @param datePaid date that the student is paying their tuition
      */
     public void payTuition(double amount, Date datePaid) {
